@@ -1,15 +1,22 @@
 <?php 
 //Databse Connection file
-require_once('db.php');
+require_once('classes/User.php');
+$user = new User();
+
 if(isset($_POST['create']))
   {
     $name=$_POST['firstname'];
     $email=$_POST['email'];
      $password=$_POST['password'];
+    $cpassword = $_POST['cpassword'];
      $user_type=$_POST['user_type'];
-    $user_status=$_POST['user_status'];
-   
-     $query = mysqli_query($conn, "INSERT INTO users(name,email,password, user_type, status,created_at,updated_at) value('$name','$email', '$password', '$user_type', '$user_status',current_timestamp(),current_timestamp() )");
+    $status=$_POST['status'];
+   if($password === $cpassword)
+   {
+     $hash = password_hash($password,PASSWORD_DEFAULT);
+    $query = $user->insertUser($name, $email, $hash, $user_type, $status);
+   }
+  
      if ($query) {
     echo 'You have successfully inserted the data';
   }
@@ -18,5 +25,6 @@ if(isset($_POST['create']))
       echo 'Something Went Wrong. Please try again';
     }
 }
-mysqli_close($conn);
+  header("Location: http://localhost/library%20system/user_list.php");
+  // mysqli_close($conn);
 ?>
