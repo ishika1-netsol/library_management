@@ -8,12 +8,12 @@ if (isset($_GET['Del'])) {
 
     // $result = mysqli_query($con,$query);
     if ($result) {
-        header("location:bookList.php");
+        header("location:BookTable.php");
         exit;
     } else {
         echo ' Please Check Your Query ';
     }
 } else {
-    header("location:bookList.php");
+    header("location:BookTable.php");
     exit;
 }

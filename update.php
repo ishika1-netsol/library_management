@@ -19,12 +19,12 @@ if (isset($_POST['update'])) {
     // $result = mysqli_query($conn,$query);
 
     if ($result) {
-        header("location:user_list.php");
+        header("location:UserTable.php");
     } else {
         echo ' Please Check Your Query ';
     }
 } else {
-    header("location:user_list.php");
+    header("location:UserTable.php");
 }
 
 

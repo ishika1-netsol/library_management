@@ -16,12 +16,12 @@ if (isset($_POST['create'])) {
     $status = $_POST['status'];
     $query = $issue->insertIssues($IssueDate, $ReturnDate, '', $BookID, $UserID, $status);
      
-    // if ($query) {
-    //     echo 'You have successfully inserted the data';
-    //     // header("Location: http://localhost/library%20system/bookList.php");
-    // } else {
-    //     echo 'Something Went Wrong. Please try again';
-            // }
+    if ($query) {
+        echo 'You have successfully inserted the data';
+        header("Location: http://localhost/library%20system/StudentlistTable.php");
+    } else {
+        echo 'Something Went Wrong. Please try again';
+            }
 }
 
 ?>

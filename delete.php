@@ -8,13 +8,13 @@ if (isset($_GET['Del'])) {
 
     // $result = mysqli_query($con,$query);
     if ($result) {
-        header("location:user_list.php");
+        header("location: UserTable.php");
         exit;
     } else {
         echo ' Please Check Your Query ';
     }
 } else {
-    header("location:user_list.php");
+    header("location:UserTable.php");
     exit;
 }
 

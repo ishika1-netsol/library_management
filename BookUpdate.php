@@ -17,10 +17,10 @@ if (isset($_POST['update'])) {
     // $result = mysqli_query($conn,$query);
 
     if ($result) {
-        header("location:bookList.php");
+        header("location:BookTable.php");
     } else {
         echo ' Please Check Your Query ';
     }
 } else {
-    header("location: bookList.php");
+    header("location: BookTable.php");
 }

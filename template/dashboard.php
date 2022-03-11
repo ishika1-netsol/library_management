@@ -1,7 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['id'])) {
-  header("location: http://localhost/library%20system/login.php");
+  // $name = $_SESSION['name'];
+  header("location: http://localhost/library%20system/userlogin.php");
   exit();
 }
 ?>
@@ -12,7 +13,7 @@ if (!isset($_SESSION['id'])) {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Corona Admin</title>
+  <title>Admin</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -74,11 +75,12 @@ if (!isset($_SESSION['id'])) {
           <div class="profile-desc">
             <div class="profile-pic">
               <div class="count-indicator">
-                <!-- <img class="img-xs rounded-circle " src="assets/images/faces/face15.jpg" alt=""> -->
+                <img class="img-xs rounded-circle " src="assets/images/faces/face15.jpg" alt="">
                 <span class="count bg-success"></span>
               </div>
               <div class="profile-name">
-                <h5 class="mb-0 font-weight-normal">Vikram Kumar</h5>
+                <h5 class="mb-0 font-weight-normal"><?php if (isset($_SESSION['name']))
+                                                      echo $_SESSION['name'] ?></h5>
                 <!-- <span>Gold Member</span> -->
               </div>
             </div>
@@ -122,7 +124,7 @@ if (!isset($_SESSION['id'])) {
         <li class="nav-item nav-category">
           <span class="nav-link">Navigation</span>
         </li>
-        <li class="nav-item menu-items">
+        <!-- <li class="nav-item menu-items">
           <a class="nav-link" href="index.html">
             <span class="menu-icon">
               <i class="mdi mdi-speedometer"></i>
@@ -145,15 +147,15 @@ if (!isset($_SESSION['id'])) {
               <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
             </ul>
           </div>
-        </li>
-        <li class="nav-item menu-items">
+        </li> -->
+        <!-- <li class="nav-item menu-items">
           <a class="nav-link" href="http://localhost/library%20system/bookForm.php">
             <span class="menu-icon">
               <i class="mdi mdi-playlist-play"></i>
             </span>
             <span class="menu-title">Form Elements</span>
           </a>
-        </li>
+        </li> -->
         <!-- <li class="nav-item menu-items">
             <a class="nav-link" href="http://localhost/library%20system/user_list.php">
               <span class="menu-icon">
@@ -172,15 +174,17 @@ if (!isset($_SESSION['id'])) {
           </a>
           <div class="collapse" id="auth">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/user_list.php"> User
+              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/UserTable.php"> User Table
                 </a></li>
-              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/bookList.php"> Book </a>
+              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/BookTable.php"> Book Table</a>
               </li>
-
+            
+              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/IssueTable.php"> Issue table </a>
+              </li>
             </ul>
           </div>
         </li>
-        <li class="nav-item menu-items">
+        <!-- <li class="nav-item menu-items">
           <a class="nav-link" href="pages/charts/chartjs.html">
             <span class="menu-icon">
               <i class="mdi mdi-chart-bar"></i>
@@ -195,7 +199,7 @@ if (!isset($_SESSION['id'])) {
             </span>
             <span class="menu-title">Icons</span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
             <span class="menu-icon">
@@ -206,24 +210,20 @@ if (!isset($_SESSION['id'])) {
           </a>
           <div class="collapse" id="auth">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-              <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/IssueForm.php"> Issue </a></li>
-              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/login.php"> Login </a>
-              </li>
-              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/forms.php"> Register
-                </a></li>
+              <!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li> -->
+              <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/bookForms.php"> Book Form </a></li>
+             
             </ul>
           </div>
         </li>
-        <li class="nav-item menu-items">
+        <!-- <li class="nav-item menu-items">
           <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
             <span class="menu-icon">
               <i class="mdi mdi-file-document-box"></i>
             </span>
             <span class="menu-title">Documentation</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </nav>
     <!-- partial -->
@@ -382,8 +382,9 @@ if (!isset($_SESSION['id'])) {
             <li class="nav-item dropdown">
               <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">
-                  <!-- <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt=""> -->
-                  <p class="mb-0 d-none d-sm-block navbar-profile-name">Vikram Kumar</p>
+                  <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt="">
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name"><?php if (isset($_SESSION['name']))
+                                                                          echo $_SESSION['name'] ?></p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </a>

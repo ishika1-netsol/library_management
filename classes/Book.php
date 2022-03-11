@@ -5,13 +5,13 @@ class Book extends Db
 {
     function insertBook($name, $author_name, $image, $status, $quantity)
     {
-        $stmt = $this->_mysqli->prepare("INSERT INTO books (name,author_name,image,status,quantity )VALUES (?,?,?,?,?)");
+        $stmt = $this->_mysqli->prepare("INSERT INTO books (book_name,author_name,image,status,quantity )VALUES (?,?,?,?,?)");
         $stmt->bind_param("ssssi", $name, $author_name, $image, $status, $quantity);
         return $stmt->execute();
     }
     function updateBook($name, $author_name, $status, $quantity, $id)
     {
-        $stmt = $this->_mysqli->prepare("UPDATE books SET name=?,author_name=?,quantity=?,status=?  where id =?");
+        $stmt = $this->_mysqli->prepare("UPDATE books SET book_name=?,author_name=?,quantity=?,status=?  where id =?");
  
         $stmt->bind_param("sssii", $name, $author_name, $quantity, $status, $id);
         return $stmt->execute();
@@ -53,6 +53,14 @@ class Book extends Db
         $result = $row['quantity'];
         return $result;
     }
+     function searchBook($name){
+        $stmt = $this->_mysqli->prepare("SELECT * FROM books WHERE book_name=?");
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+        $query = $stmt->get_result();
+        return $query;
+     } 
+
 
 
 
