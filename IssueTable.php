@@ -6,6 +6,8 @@ if (!isset($_SESSION['id'])) {
 }
 include("classes/Issue.php");
 $issue = new Issue();
+
+
 ?>
 
 <?php
@@ -29,7 +31,10 @@ require_once("header.php");
                             <div class="card-body">
                                 <h4 class="card-title">Issue Table</h4>
                                 <!-- <p class="card-description"> Add class <code>.table-dark</code> -->
-                                </p>
+                                <!-- </p> -->
+                                <form method="post" action="issueExport.php">
+                                    <input type="submit" name="export" value="CSV Export" class="btn btn-primary" />
+                                </form>
                                 <div class="table-responsive">
                                     <table class="table table-dark">
                                         <thead>
@@ -66,7 +71,7 @@ require_once("header.php");
                                                         <td><?php echo $UserName ?></td>
                                                         <td><?php print date("h:i a d-F-Y", strtotime($IssueDate)) ?></td>
                                                         <td><?php print date(" h:i a d-F-Y", strtotime($ReturnDate)) ?></td>
-                                                     
+
                                                         <td><?php
                                                             if ($BookStatus == '1') {
                                                                 echo "issued";

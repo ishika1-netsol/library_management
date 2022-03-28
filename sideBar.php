@@ -107,7 +107,8 @@
       </a>
       <div class="collapse" id="auth">
         <ul class="nav flex-column sub-menu">
-          <?php if (isset($_SESSION['user_type']) == 'admin') { ?>
+          <?php if ($_SESSION['user_type'] == 'admin') { 
+            ?>
             <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/UserTable.php"> User Table
               </a></li>
             <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/BookTable.php"> Book Table </a>
@@ -115,7 +116,8 @@
             <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/IssueTable.php"> Issue Table </a>
             </li>
           <?php
-          } elseif (isset($_SESSION['user_type']) == 'student') { ?>
+          } elseif ($_SESSION['user_type'] == 'student') {
+             ?>
             <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/StudentlistTable.php"> Student Table</a>
             </li>
             <li class="nav-item"> <a class="nav-link" href="http://localhost/library%20system/IssueTable.php"> Issue Table </a>
@@ -173,7 +175,13 @@
   </ul>
 </nav>
 <!-- partial -->
-https://github.com/kritika573/myproject
-https://github.com/arun-netsolutions/Mazic-Zoo.git
-https://github.com/abhishek9025/Salary_Management
-https://github.com/udesh-netsolutions/shopCatalog
+
+
+
+
+
+
+
+
+
+

@@ -20,9 +20,10 @@ class User extends Db {
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
-    function fetchUser()
+    function fetchUser($offset,$limit)
     {  
-        $stmt = $this->_mysqli->prepare('SELECT * FROM users');
+        $stmt = $this->_mysqli->prepare("SELECT * FROM users LIMIT ?, ?");
+        $stmt->bind_param("ii", $offset,$limit);
         $stmt->execute();
         $query = $stmt->get_result();
         return $query;
@@ -39,6 +40,22 @@ class User extends Db {
     {
         $stmt = $this->_mysqli->prepare("SELECT * FROM users WHERE email=?");
         $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $query = $stmt->get_result();
+        return $query;
+    }
+     function fetchCount()
+    {
+        $stmt = $this->_mysqli->prepare('SELECT count(*) FROM users');
+        $stmt->execute();
+        $query = $stmt->get_result();
+        $row = $query->fetch_assoc();
+        $saved = $row['count(*)'];
+        return $saved;
+    }
+    function fetchAll()
+    {
+        $stmt = $this->_mysqli->prepare("SELECT * FROM users ");      
         $stmt->execute();
         $query = $stmt->get_result();
         return $query;

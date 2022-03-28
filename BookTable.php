@@ -26,14 +26,24 @@ require_once("header.php");
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
+                                <form action="Search.php" method="get">
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="search" value="<?php if (isset($_GET['search'])) {
+                                                                                    echo $_GET['search'];
+                                                                                } ?>" class="form-control" placeholder="search books">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </div>
+                                </form>
                                 <h4 class="card-title">Book Table</h4>
                                 <!-- <p class="card-description"> Add class <code>.table-dark</code> -->
-                                </p>
+                                <!-- </p> -->
+                                <form method="post" action="bookExport.php">
+                                    <input type="submit" name="export" value="CSV Export" class="btn btn-primary" />
+                                </form>
                                 <div class="table-responsive">
                                     <table class="table table-dark">
                                         <thead>
                                             <tr>
-                                                <th>S.No</th>
                                                 <th> Book ID </th>
                                                 <th> Name </th>
                                                 <th> AuthorName </th>
@@ -46,49 +56,7 @@ require_once("header.php");
                                                 <th> Delete </th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            $number = 1;
-                                            $result = $book->fetchBook();
-
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-
-                                                    $BookID = $row['id'];
-                                                    $BookName = $row['book_name'];
-                                                    $AuthorName = $row['author_name'];
-                                                    $BookImage  = $row['image'];
-                                                    $BookStatus = $row['status'];
-                                                    $BookQuantity = $row['quantity'];
-                                                    $Created_at = $row['created_at'];
-                                                    $Updated_at = $row['updated_at'];
-                                            ?>
-                                                    <tr>
-                                                        <td><?php echo $number ?></td>
-                                                        <td><?php echo $BookID ?></td>
-                                                        <td><?php echo $BookName ?></td>
-                                                        <td><?php echo $AuthorName ?></td>
-                                                        <td><?php echo ("<img src='img/" . $row['image'] . "' height=80px; width=60px: />") ?></td>
-                                                        <td><?php
-                                                            if ($BookStatus == '1') {
-                                                                echo "issued";
-                                                            } elseif ($BookStatus == '0') {
-                                                                echo "return";
-                                                            } ?></td>
-                                                        <td><?php echo $BookQuantity ?></td>
-                                                        <td><?php print date("h:i d-F-Y", strtotime($Created_at)) ?></td>
-                                                        <td><?php print date(" h:i d-F-Y", strtotime($Updated_at)) ?></td>
-                                                        <td><a href="Bookedits.php?GetID=<?php echo $BookID ?>">Edit</a></td>
-                                                        <td><a href="BookDelete.php?Del=<?php echo $BookID ?>">Delete</a></td>
-                                                    </tr>
-                                            <?php
-                                                $number++;
-                                                }
-                                            } else {
-                                                echo "NO RECORDS";
-                                            }
-                                            ?>
-
+                                        <tbody class="books">
                                         </tbody>
                                     </table>
                                 </div>
@@ -98,41 +66,79 @@ require_once("header.php");
                 </div>
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
-                <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com
-                            2020</span>
-                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin
-                                templates</a> from Bootstrapdash.com</span>
-                    </div>
-                </footer>
+                <?php require_once("footer.php"); ?>
                 <!-- partial -->
+                <!-- Modal -->
+                <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Book</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="BookDelete.php" method="post">
+                                <input type="hidden" name="delete_id" class="delete_user_id">
+                                <div class="modal-body">
+                                    Are you sure. you want to delete this data?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" name="deleteUserbtn" class="btn btn-primary">Yes,Delete!</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
             <!-- main-panel ends -->
         </div>
         <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
-    <!-- End custom js for this page -->
+    <?php require_once("script.php"); ?>
+    <script>
+        $(document).ready(function() {
+            getdata();
+            $(document).on('click', '.delete-btn', function(e) {
+                e.preventDefault();
+                var user_id = $(this).val();
+                console.log(user_id);
+                $('.delete_user_id').val(user_id);
+                $('#DeleteModal').modal('show');
+            });
+
+        });
+
+        function getdata() {
+            $.ajax({
+                type: "get",
+                url: "bookFetch.php",
+                success: function(response) {
+                    response = JSON.parse(response);                 
+                    $.each(response, function(key, value) {      
+                        $('.books').append('<tr>' +
+                            '<td>' + value['id'] + '</td>\
+                            <td>' + value['book_name'] + '</td>\
+                                 <td>' + value['author_name'] + '</td>\
+                                 <td> <img src="img/' + value['image'] + '" height="80px" width="60px"/></td>\
+                                   <td>' + value['status'] + '</td>\
+                                    <td>' + value['quantity'] + '</td>\
+                                      <td>' + value['created_at'] + '</td>\
+                                        <td>' + value['updated_at'] + '</td>\
+                                        <td><a href="Bookedits.php?GetID=' + value['id'] + '">Edit</a></td>\
+                                        <td><button type="button" value="' + value['id'] + '" class="btn btn-danger btn-sm delete-btn" name="button">Delete</button></td>\
+                                         </tr>');
+                    });
+                }
+            });
+
+        }
+    </script>
+    
 </body>
 
 </html>

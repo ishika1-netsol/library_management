@@ -23,11 +23,14 @@ class Book extends Db
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
-    function fetchBook()
+    function fetchBook($order,$sort)
     {
-        $stmt = $this->_mysqli->prepare('SELECT * FROM books');
+        $stmt = $this->_mysqli->prepare('SELECT * FROM books ORDER BY '.$order.' '.$sort);
+        // $stmt->bind_param("ss", $order,$sort);
         $stmt->execute();
         $query = $stmt->get_result();
+        // var_dump($order,$sort);
+        // echo('SELECT * FROM books ORDER BY $order ,$sort');
         return $query;
     }
     function editBook($id)
@@ -54,16 +57,19 @@ class Book extends Db
         return $result;
     }
      function searchBook($name){
-        $stmt = $this->_mysqli->prepare("SELECT * FROM books WHERE book_name=?");
-        $stmt->bind_param("s", $name);
+        $stmt = $this->_mysqli->prepare("SELECT * FROM books WHERE book_name  LIKE '%$name%' OR  author_name LIKE '%$name%' ");   
         $stmt->execute();
         $query = $stmt->get_result();
         return $query;
-     } 
-
-
-
-
+     }
+    function fetchAll()
+    {
+        $stmt = $this->_mysqli->prepare('SELECT * FROM books ');
+        $stmt->execute();
+        $query = $stmt->get_result();       
+        return $query;
+    }
+   
 }
 
 ?>

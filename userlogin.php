@@ -1,7 +1,7 @@
 <?php
 require_once('classes/User.php');
 $user = new User();
-if (isset($_POST['login'])) {  
+if (isset($_POST['login'])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
     $canLogin = true;
@@ -14,7 +14,7 @@ if (isset($_POST['login'])) {
         $canLogin = false;
     }
     if ($canLogin) {
-        $query = $user->login($email);       
+        $query = $user->login($email);
         if ($query->num_rows > 0) {
             while ($row = $query->fetch_assoc()) {
                 if (password_verify($password, $row["password"])) {
@@ -24,22 +24,25 @@ if (isset($_POST['login'])) {
                     $_SESSION["user_type"] = $row['user_type'];
                     $_SESSION["status"] = $row['status'];
                     $_SESSION["email"] = $row['email'];
-                    if ($_SESSION['user_type'] == 'admin'){          
+                    if ($_SESSION['user_type'] == 'admin') {
                         header("location:template/dashboard.php");
                         exit();
                     } else if ($_SESSION['user_type'] == 'student') {
                         header("location:http://localhost/library%20system/template/dashborad1.php");
                         exit();
                     }
-                }else{
+                } else {
                     $passwordError = "You have Entered Incorrect Password";
                 }
             }
-        }else{
-            $emailError = "Please Enter Correct Email"; 
-        }       
-    }      
-} 
+        } else {
+            $emailError = "Please Enter Correct Email";
+        }
+    }
+}
+if (isset($_GET['successful'])) {
+   $success = "Successfully Registered";
+}
 require_once("header.php");
 ?>
 
@@ -54,11 +57,16 @@ require_once("header.php");
                     <div class="card col-lg-4 mx-auto">
                         <div class="card-body px-5 py-5">
                             <h3 class="card-title text-left mb-3">Login</h3>
-                            <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
+                            <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST" id="login">
+                                <p class=text-success>
+                                    <?php if (isset($success)) {
+                                        echo $success;
+                                    } ?></p>
+                                </p>
 
                                 <div class="form-group">
                                     <label for="email">email</label>
-                                    <input type="email" class="form-control p_input" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
+                                    <input type="text" class="form-control p_input" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
                                     <p class="text-danger"><?php if (isset($emailError)) {
                                                                 echo $emailError;
                                                             } ?></p>
@@ -71,22 +79,11 @@ require_once("header.php");
                                                                 echo $passwordError;
                                                             } ?></p>
                                 </div>
-                                <!-- <div class="form-group d-flex align-items-center justify-content-between">
-                                     <div class="form-check">
-                                         <label class="form-check-label">
-                                             <input type="checkbox" class="form-check-input"> Remember me </label>
-                                     </div>
-                                     <a href="#" class="forgot-pass">Forgot password</a>
-                                 </div> -->
+
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary btn-block enter-btn" name="login" value="submit">Login</button>
                                 </div>
-                                <!-- <div class="d-flex">
-                                     <button class="btn btn-facebook mr-2 col">
-                                         <i class="mdi mdi-facebook"></i> Facebook </button>
-                                     <button class="btn btn-google col">
-                                         <i class="mdi mdi-google-plus"></i> Google plus </button>
-                                 </div> -->
+
                                 <p class="sign-up">Don't have an Account?<a href="UserForm.php">Register</a></p>
                             </form>
                         </div>
@@ -97,4 +94,5 @@ require_once("header.php");
             <!-- row ends -->
         </div>
     </div>
+  
 </body>

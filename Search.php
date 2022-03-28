@@ -25,19 +25,11 @@ require_once("header.php");
                 <div class="row">
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
-                            <div class="card-body">
-                                <!-- <form action="Search.php" method="get">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="search" value="" class="form-control" placeholder="search books">
-                                            <button type="submit" class="btn btn-primary">Search</button>
-                                        </div>
-                                    </form> -->
-
-
-
-
-                                <h4 class="card-title"> User Book Table</h4>
-                                <!-- <p class="card-description"> Add class <code>.table-dark</code> -->
+                            <div class="card-body">                              
+                                <form method="post" action="bookExport.php">
+                                    <input type="submit" name="export" value="CSV Export" class="btn btn-primary" />
+                                </form>
+                                <h4 class="card-title"> User Book Table</h4>                          
                                 </p>
                                 <div class="table-responsive">
                                     <table class="table table-dark">
@@ -59,9 +51,8 @@ require_once("header.php");
                                             if (isset($_GET['search'])) {
                                                 $filterValue = $_GET['search'];
                                                 $search = $book->searchBook($filterValue);
-
-                                                // $result = $book->fetchBook();
-
+                                                
+                                                $_SESSION['value'] = $filterValue;
                                                 if ($search->num_rows > 0) {
                                                     while ($row = $search->fetch_assoc()) {
                                                         $BookID = $row['id'];

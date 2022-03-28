@@ -76,7 +76,7 @@ require_once("header.php");
                                         <label>File Upload</label>
                                         <input type="file" class="form-control" name="image" id="image" value="" required>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mr-2" name="create" value="submit">Submit</button>
+                                    <button type="submit" class="btn btn-primary mr-2" id="load-button" name="create" value="submit">Submit</button>
                                     <button class="btn btn-dark" name="Cancel" type="submit" value="Cancel">Cancel</button>
                                 </form>
                             </div>
@@ -85,5 +85,5 @@ require_once("header.php");
                 </div>
             </div>
         </div>
-    </div>
+    </div>   
 </body>

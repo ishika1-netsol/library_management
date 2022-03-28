@@ -30,7 +30,7 @@ class Issue extends Db
     }
     function fetchAll()
     {
-        $stmt = $this->_mysqli->prepare('SELECT * FROM issues');
+        $stmt = $this->_mysqli->prepare('SELECT * FROM issues ORDER BY return_date desc');
         $stmt->execute();
         $query = $stmt->get_result();
         return $query;
@@ -42,11 +42,14 @@ class Issue extends Db
         $query = $stmt->get_result();
         return $query;
     }
+
+    function fetchIssueDate()
+    {
+        $stmt = $this->_mysqli->prepare('SELECT issue_date FROM `issues` WHERE status = 1');
+        $stmt->execute();
+        $query = $stmt->get_result();
+        return $query;
+    }
 }
 ?>
 
-<!-- SELECT books.name,users.name, issues.issue_date,issues.return_date,issues.status,issues.created_at,issues.updated_at FROM `issues` RIGHT JOIN users ON issues.user_id = users.id RIGHT JOIN books ON issues.book_id = books.id; -->
-
-
-
-<!-- SELECT count(*) FROM `issues` WHERE status = 1 AND book_id = 7 AND ("2022-03-04" between issue_date AND return_date); -->
