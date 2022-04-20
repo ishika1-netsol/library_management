@@ -7,7 +7,7 @@ if (isset($_POST["export"])) {
     header("content-disposition: attachment; filename=data.csv");
     $output = fopen("php://output", "w");
     fputcsv($output, array("id", "name", "email", "password","user_type","status" ,"created_at", "updated_at"));    
-    $result = $user->fetchUser();
+    // $result = $user->fetchUser();
     while ($row = mysqli_fetch_assoc($result)) {
         fputcsv($output, $row);
     }

@@ -1,5 +1,4 @@
 <?php
-
 require_once 'classes/Db.php';
 class Book extends Db
 {
